@@ -1,15 +1,38 @@
 /* margin: [arriba] [derecha] [abajo] [izquierda]; */
+.overflow-x {
+    overflow-x: hidden;
+}
 
 .pd-planeta-left {
-    margin: 0 0 40px 30%;
+    margin: 0 0 0 30%;
     animation: fadeInTopLeft;
     animation-duration: 2s;
 }
 
 .pd-planeta-right {
-    margin: 0 0 40px 60%;
-    animation: fadeInBottomRight;
+    margin: 0 0 0 60%;
+    animation: fadeInRight;
     animation-duration: 3s;
+}
+
+@keyframes pulseEffect {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.sombra-levitacion:hover {
+    animation: pulseEffect 1.5s infinite;
+}
+
+.sun {
+    --animate-duration: 6s;
 }
 
 .sombra-levitacion {
