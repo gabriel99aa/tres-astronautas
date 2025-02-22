@@ -1,0 +1,21 @@
+/* margin: [arriba] [derecha] [abajo] [izquierda]; */
+
+.pd-planeta-left {
+    margin: 0 0 40px 30%;
+    animation: fadeInTopLeft;
+    animation-duration: 2s;
+}
+
+.pd-planeta-right {
+    margin: 0 0 40px 60%;
+    animation: fadeInBottomRight;
+    animation-duration: 3s;
+}
+
+.sombra-levitacion {
+    display: block;
+    width: 20rem;
+    height: 20rem;
+    cursor: pointer;
+    filter: drop-shadow(0px 30px 30px rgba(0, 0, 0, 0.9));
+}

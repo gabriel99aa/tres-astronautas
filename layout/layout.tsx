@@ -13,7 +13,17 @@ import AppFooter from './AppFooter';
 import type { AppTopbarRef, ChildContainerProps } from '@/types';
 
 const Layout = (props: ChildContainerProps) => {
-    const { layoutConfig, layoutState, setLayoutState, setLayoutConfig, isSlim, isSlimPlus, isHorizontal, isDesktop, isSidebarActive } = useContext(LayoutContext);
+    const {
+        layoutConfig,
+        layoutState,
+        setLayoutState,
+        setLayoutConfig,
+        isSlim,
+        isSlimPlus,
+        isHorizontal,
+        isDesktop,
+        isSidebarActive
+    } = useContext(LayoutContext);
     const { setRipple } = useContext(PrimeReactContext);
     const topbarRef = useRef<AppTopbarRef>(null);
     const sidebarRef = useRef<HTMLDivElement>(null);
@@ -69,7 +79,10 @@ const Layout = (props: ChildContainerProps) => {
         if (document.body.classList) {
             document.body.classList.remove('blocked-scroll');
         } else {
-            document.body.className = document.body.className.replace(new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            document.body.className = document.body.className.replace(
+                new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'),
+                ' '
+            );
         }
     };
 
@@ -160,19 +173,24 @@ const Layout = (props: ChildContainerProps) => {
         <React.Fragment>
             <div className={classNames('layout-container', containerClassName)}>
                 <AppTopbar ref={topbarRef} />
-                <div ref={sidebarRef} className="layout-sidebar" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+                {/* <div
+                    ref={sidebarRef}
+                    className="layout-sidebar"
+                    onMouseEnter={onMouseEnter}
+                    onMouseLeave={onMouseLeave}
+                >
                     <AppSidebar />
-                </div>
+                </div> */}
                 <div className="layout-content-wrapper">
-                    <div className="layout-content">
+                    <div className="layout-content p-0">
                         <div className="layout-content-inner">
-                            <AppBreadcrumb></AppBreadcrumb>
+                            {/* <AppBreadcrumb></AppBreadcrumb> */}
                             {props.children}
-                            <AppFooter></AppFooter>
+                            {/* <AppFooter></AppFooter> */}
                         </div>
                     </div>
                 </div>
-                <AppConfig />
+                {/* <AppConfig /> */}
             </div>
         </React.Fragment>
     );
