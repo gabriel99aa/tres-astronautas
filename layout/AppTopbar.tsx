@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Planet } from '@interfaces';
-import { Filter, Search } from '@components';
+import { Favorites, Filter, Search } from '@components';
 import Link from 'next/link';
 
 const planets: Planet[] = [
@@ -24,6 +24,7 @@ const AppTopbar = forwardRef((props, ref) => {
             <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '2rem' }}>
                 <Search planets={planets} />
                 <Filter planets={planets} />
+                <Favorites planets={planets} />
             </div>
         </div>
     );

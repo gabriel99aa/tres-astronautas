@@ -4,9 +4,22 @@ import React, { useEffect, useState } from 'react';
 import { Props, CelestialBody } from '@interfaces';
 import { useGeneralStore } from '@store';
 import { Avatar } from 'primereact/avatar';
+import { getCelestialBody } from '@/infrastructure/services';
 
 const Name = ({ params }: Props) => {
-    const { planets } = useGeneralStore((state) => state);
+    const { planets, setPlanets } = useGeneralStore((state) => state);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const result = await getCelestialBody();
+                setPlanets(result);
+            } catch (err) {
+                console.log('Error al obtener los datos');
+            }
+        }
+        if (!planets) fetchData();
+    }, []);
 
     const planet = planets?.find((planet: CelestialBody) => planet.id === params.name);
 
@@ -22,7 +35,7 @@ const Name = ({ params }: Props) => {
                 </div>
                 <div style={{ display: 'grid', alignItems: 'center', paddingRight: '4rem' }}>
                     <div className="card">
-                        <h5>Latest Customers</h5>
+                        <h5>Description of the planet</h5>
                         <div className="planet-datos-grid">
                             <div>
                                 <ul className="list-none p-0 m-0">

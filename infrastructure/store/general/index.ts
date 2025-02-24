@@ -5,6 +5,9 @@ import { persist, PersistStorage, StorageValue } from 'zustand/middleware';
 interface GeneralState {
     planets: CelestialBody[] | null;
     setPlanets: (data: CelestialBody[]) => void;
+    favorites: string[];
+    setFavorites: (data: string) => void;
+    reset: () => void;
 }
 
 // Definimos el tipo del estado que realmente se guardará en sessionStorage
@@ -29,12 +32,19 @@ export const useGeneralStore = create<GeneralState>()(
         (set) => ({
             planets: null,
             setPlanets: (planets: CelestialBody[]) => set({ planets }),
+            favorites: [],
+            setFavorites: (data: string) =>
+                set((state) => ({
+                    favorites: state.favorites.includes(data)
+                        ? state.favorites.filter((item) => item !== data) // Si ya está, lo elimina
+                        : [...state.favorites, data] // Si no está, lo agrega
+                })),
             reset: () => set({ planets: null })
         }),
         {
             name: 'general-storage',
             storage: sessionStoragePersist,
-            partialize: (state) => ({ planets: state.planets })
+            partialize: (state) => ({ planets: state.planets, favorites: state.favorites })
         }
     )
 );
