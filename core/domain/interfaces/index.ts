@@ -40,3 +40,8 @@ export interface CelestialBody {
     bodyType: string;
     rel: string;
 }
+
+export interface Planet {
+    name: string;
+    link: string;
+}
