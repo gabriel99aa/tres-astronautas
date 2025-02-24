@@ -1,15 +1,13 @@
 'use client';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { PrimeReactContext } from 'primereact/api';
-import { useEventListener, useMountEffect, useResizeListener, useUnmountEffect } from 'primereact/hooks';
+import { useEventListener, useResizeListener, useUnmountEffect } from 'primereact/hooks';
 import { classNames, DomHandler } from 'primereact/utils';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import AppConfig from './AppConfig';
-import AppSidebar from './AppSidebar';
+
 import AppTopbar from './AppTopbar';
 import { LayoutContext } from './context/layoutcontext';
-import AppBreadcrumb from './AppBreadCrumb';
-import AppFooter from './AppFooter';
+
 import type { AppTopbarRef, ChildContainerProps } from '@/types';
 
 const Layout = (props: ChildContainerProps) => {
@@ -173,24 +171,11 @@ const Layout = (props: ChildContainerProps) => {
         <React.Fragment>
             <div className={classNames('layout-container', containerClassName)}>
                 <AppTopbar ref={topbarRef} />
-                {/* <div
-                    ref={sidebarRef}
-                    className="layout-sidebar"
-                    onMouseEnter={onMouseEnter}
-                    onMouseLeave={onMouseLeave}
-                >
-                    <AppSidebar />
-                </div> */}
                 <div className="layout-content-wrapper">
                     <div className="layout-content p-0">
-                        <div className="layout-content-inner">
-                            {/* <AppBreadcrumb></AppBreadcrumb> */}
-                            {props.children}
-                            {/* <AppFooter></AppFooter> */}
-                        </div>
+                        <div className="layout-content-inner">{props.children}</div>
                     </div>
                 </div>
-                {/* <AppConfig /> */}
             </div>
         </React.Fragment>
     );

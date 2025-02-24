@@ -133,21 +133,15 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         <LayoutContext.Provider value={value as any}>
             <>
                 <Head>
-                    <title>PrimeReact - Verona</title>
+                    <title>Sistema Solar</title>
                     <meta charSet="UTF-8" />
-                    <meta
-                        name="description"
-                        content="The ultimate collection of design-agnostic, flexible and accessible React UI Components."
-                    />
+                    <meta name="description" content="Sistema solar" />
                     <meta name="robots" content="index, follow" />
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                     <meta property="og:type" content="website"></meta>
                     <meta property="og:title" content="Verona by PrimeReact for NextJS"></meta>
                     <meta property="og:url" content="https://www.primefaces.org/verona-react"></meta>
-                    <meta
-                        property="og:description"
-                        content="The ultimate collection of design-agnostic, flexible and accessible React UI Components."
-                    />
+                    <meta property="og:description" content="Sistema solar" />
                     <meta
                         property="og:image"
                         content="https://www.primefaces.org/static/social/verona-react.png"

@@ -7,8 +7,8 @@ interface FullPageLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: 'PrimeReact Verona',
-    description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.'
+    title: 'Sistema Solar',
+    description: 'Sistema Solar'
 };
 
 export default function FullPageLayout({ children }: FullPageLayoutProps) {
