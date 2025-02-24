@@ -27,6 +27,8 @@ const AppTopbar = forwardRef((props, ref) => {
     const [filteredResults, setFilteredResults] = useState<Planet[]>([]);
     const [filterActive, setFilterActive] = useState(false);
     const [filteredPlanets, setFilteredPlanets] = useState(planets);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 5;
 
     const router = useRouter();
     const searchRef = useRef<HTMLDivElement>(null);
@@ -68,6 +70,9 @@ const AppTopbar = forwardRef((props, ref) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const totalPages = Math.ceil(filteredPlanets.length / itemsPerPage);
+    const paginatedPlanets = filteredPlanets.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
     return (
         <div className="layout-topbar">
             <Link href={'/'} className="app-logo">
@@ -75,7 +80,6 @@ const AppTopbar = forwardRef((props, ref) => {
                 <span className="app-name">Solar System</span>
             </Link>
             <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                {/* Botón de búsqueda */}
                 <div className={classNames('topbar-search', { 'topbar-search-active': searchActive })}>
                     <button className="topbar-searchbutton p-link" onClick={() => setSearchActive(true)}>
                         <i className="pi pi-search"></i>
@@ -98,18 +102,16 @@ const AppTopbar = forwardRef((props, ref) => {
                     </div>
                 </div>
 
-                {/* Botón de filtro */}
                 <div ref={filterRef} className={classNames('topbar-search')}>
                     <button className="topbar-searchbutton p-link" onClick={toggleFilter}>
                         <i className="pi pi-sort-alpha-down" style={{ fontSize: '18px' }}></i>
                     </button>
-                    {/* Desplegable del filtro */}
                     {filterActive && (
                         <div
                             className="filter-dropdown card"
                             style={{
                                 position: 'absolute',
-                                top: '70px',
+                                top: '80px',
                                 right: '10px',
                                 padding: '10px',
                                 borderRadius: '5px',
@@ -128,7 +130,7 @@ const AppTopbar = forwardRef((props, ref) => {
                                 <Button icon="pi pi-arrow-down" onClick={sortDescending} />
                             </div>
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                                {filteredPlanets.map((planet) => (
+                                {paginatedPlanets.map((planet) => (
                                     <li
                                         key={planet.name}
                                         style={{ padding: '5px', cursor: 'pointer' }}
@@ -138,6 +140,29 @@ const AppTopbar = forwardRef((props, ref) => {
                                     </li>
                                 ))}
                             </ul>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'baseline',
+                                    marginTop: '10px',
+                                    gap: '2rem'
+                                }}
+                            >
+                                <Button
+                                    icon="pi pi-chevron-left"
+                                    disabled={currentPage === 0}
+                                    onClick={() => setCurrentPage(currentPage - 1)}
+                                />
+                                <span>
+                                    Page {currentPage + 1} of {totalPages}
+                                </span>
+                                <Button
+                                    icon="pi pi-chevron-right"
+                                    disabled={currentPage === totalPages - 1}
+                                    onClick={() => setCurrentPage(currentPage + 1)}
+                                />
+                            </div>
                         </div>
                     )}
                 </div>
