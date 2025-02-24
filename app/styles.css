@@ -59,6 +59,11 @@
     gap: 1rem;
 }
 
+.hover-li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+}
+
 @media (max-width: 768px) {
     .planet-datos-grid {
         grid-template-columns: 1fr;

@@ -69,7 +69,7 @@ const LandingPage: Page = () => {
                             src={image}
                             data-pr-tooltip={name}
                             onClick={() => router.push(`planet/${name}`)}
-                            className={`sombra-levitacion ${className}`}
+                            className={`sombra-levitacion ${className} cursor: pointer`}
                         />
                     ))}
                 </div>

@@ -53,6 +53,7 @@ export const Favorites = ({ planets }: { planets: Planet[] }) => {
                                 <li
                                     style={{ padding: '5px', cursor: 'pointer', display: 'grid', placeItems: 'center' }}
                                     onClick={() => navigateToPlanet(planet.name)}
+                                    className='hover-li'
                                 >
                                     <i
                                         className={`pi ${

@@ -97,6 +97,7 @@ export const Filter = ({ planets }: { planets: Planet[] }) => {
                                 key={planet.name}
                                 style={{ padding: '5px', cursor: 'pointer' }}
                                 onClick={() => navigateToPlanet(planet.link)}
+                                className="hover-li"
                             >
                                 {planet.name}
                             </li>
