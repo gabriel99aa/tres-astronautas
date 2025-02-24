@@ -1,5 +1,5 @@
 import { AutoComplete } from 'primereact/autocomplete';
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { classNames } from 'primereact/utils';
 import { Button } from 'primereact/button';
@@ -22,15 +22,15 @@ const planets: Planet[] = [
 ];
 
 const AppTopbar = forwardRef((props, ref) => {
-    const [searchActive, setSearchActive] = useState<boolean | null>(null);
-    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [searchActive, setSearchActive] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const [filteredResults, setFilteredResults] = useState<Planet[]>([]);
     const [filterActive, setFilterActive] = useState(false);
-    const [sortedPlanets, setSortedPlanets] = useState<Planet[]>([...planets]);
     const [filteredPlanets, setFilteredPlanets] = useState(planets);
 
     const router = useRouter();
-    const menubuttonRef = useRef(null);
+    const searchRef = useRef<HTMLDivElement>(null);
+    const filterRef = useRef<HTMLDivElement>(null);
 
     const search = (event: { query: string }) => {
         const query = event.query.toLowerCase();
@@ -41,12 +41,12 @@ const AppTopbar = forwardRef((props, ref) => {
     const onSelect = (e: { value: Planet }) => {
         router.push(e.value.link);
         setSearchActive(false);
+        setSearchTerm('');
     };
 
     const toggleFilter = () => setFilterActive(!filterActive);
 
     const sortAscending = () => setFilteredPlanets([...filteredPlanets].sort((a, b) => a.name.localeCompare(b.name)));
-
     const sortDescending = () => setFilteredPlanets([...filteredPlanets].sort((a, b) => b.name.localeCompare(a.name)));
 
     const navigateToPlanet = (link: string) => {
@@ -55,8 +55,18 @@ const AppTopbar = forwardRef((props, ref) => {
     };
 
     useImperativeHandle(ref, () => ({
-        menubutton: menubuttonRef.current
+        menubutton: searchRef.current
     }));
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+                setFilterActive(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     return (
         <div className="layout-topbar">
@@ -89,49 +99,48 @@ const AppTopbar = forwardRef((props, ref) => {
                 </div>
 
                 {/* Botón de filtro */}
-                <div className={classNames('topbar-search')}>
+                <div ref={filterRef} className={classNames('topbar-search')}>
                     <button className="topbar-searchbutton p-link" onClick={toggleFilter}>
                         <i className="pi pi-sort-alpha-down" style={{ fontSize: '18px' }}></i>
                     </button>
-                </div>
-
-                {/* Desplegable del filtro */}
-                {filterActive && (
-                    <div
-                        className="filter-dropdown card"
-                        style={{
-                            position: 'absolute',
-                            top: '70px',
-                            right: '10px',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
-                        }}
-                    >
+                    {/* Desplegable del filtro */}
+                    {filterActive && (
                         <div
+                            className="filter-dropdown card"
                             style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                marginBottom: '10px',
-                                gap: '1rem'
+                                position: 'absolute',
+                                top: '70px',
+                                right: '10px',
+                                padding: '10px',
+                                borderRadius: '5px',
+                                boxShadow: '0px 0px 10px rgba(0,0,0,0.1)'
                             }}
                         >
-                            <Button icon="pi pi-arrow-up" onClick={sortAscending} />
-                            <Button icon="pi pi-arrow-down" onClick={sortDescending} />
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    marginBottom: '10px',
+                                    gap: '1rem'
+                                }}
+                            >
+                                <Button icon="pi pi-arrow-up" onClick={sortAscending} />
+                                <Button icon="pi pi-arrow-down" onClick={sortDescending} />
+                            </div>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                {filteredPlanets.map((planet) => (
+                                    <li
+                                        key={planet.name}
+                                        style={{ padding: '5px', cursor: 'pointer' }}
+                                        onClick={() => navigateToPlanet(planet.link)}
+                                    >
+                                        {planet.name}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                            {filteredPlanets.map((planet) => (
-                                <li
-                                    key={planet.name}
-                                    style={{ padding: '5px', cursor: 'pointer' }}
-                                    onClick={() => navigateToPlanet(planet.link)}
-                                >
-                                    {planet.name}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );
