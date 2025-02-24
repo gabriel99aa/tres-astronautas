@@ -10,7 +10,7 @@
 }
 
 .pd-planeta-right {
-    margin: 0 0 0 60%;
+    margin: 0 0 0 55%;
     animation: fadeInRight;
     animation-duration: 3s;
 }
@@ -35,10 +35,34 @@
     --animate-duration: 6s;
 }
 
+.height-secure {
+    height: 32rem !important;
+}
+
 .sombra-levitacion {
     display: block;
     width: 20rem;
     height: 20rem;
     cursor: pointer;
     filter: drop-shadow(0px 30px 30px rgba(0, 0, 0, 0.9));
+}
+
+.sombra-levitacion-masive {
+    width: 50rem;
+    height: 50rem;
+    filter: drop-shadow(0px 30px 30px rgba(0, 0, 0, 0.9));
+}
+
+.planet-datos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .planet-datos-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        overflow-x: hidden;
+    }
 }

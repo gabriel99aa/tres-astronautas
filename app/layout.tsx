@@ -9,6 +9,7 @@ import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import '../styles/demo/Demos.scss';
+import './styles.css';
 import 'animate.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
